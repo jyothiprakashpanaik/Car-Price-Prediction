@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		car Prize Prediction 
+	</title>
+	<link rel="icon" href="https://img.icons8.com/fluent/96/000000/car.png">
+	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+	 <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+    	@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
+
+    	html,
+		body {
+		  font-family: "Roboto", Helvetica, Arial, sans-serif;
+		  font-weight: 100;
+		  font-size: large;
+		  line-height: 30px;
+		  height: 100%;
+		  width: 100%;
+		  background: #4776E6;  /* fallback for old browsers */
+		  background: linear-gradient(to right, #ffe259, #ffa751);
+		  text-align: center;
+
+		}
+		h3{
+			margin-top: 20px;
+		}
+
+
+
+    </style>
+
+</head>
+<body>
+
+	
+	<div class="container w-full max-w-xs">
+
+        <form action="{{ url_for('predict')}}" method="post">
+            <h2 style="margin: 20px;padding: 20px;color: red">Predictive analysis</h2>
+            <h3>Year of Buying</h3>
+            <!-- <input id="first" name="Year" type="number " class="form-input mt-1 block w-full" placeholder="Jane Doe"> -->
+            <input id="first" name="Year" type="number" placeholder="Year i.e.,2004">
+            <h3>What is the Showroom Price?(In lakhs)</h3><br>
+            <input id="second" name="Present_Price" required="required" placeholder="Price(L) i.e.,3.5">
+            <h3>How Many Kilometers Drived?</h3><input id="third" name="Kms_Driven" required="required" placeholder="Kilometers(KM) i.e.,20000">
+            
+            <h3>How much owners previously had the car(0 or 1 ) ?</h3><br>
+
+           <!--  <select id="fourth" name="Owner" required="required">
+            	<option value="0">0</option>
+                <option value="1">1</option>
+            </select> -->
+
+            <div class="inline-block relative w-64" >
+			  <select id="fourth" name="Owner" required="required" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+			    <option value="0">0-First Hand Car</option>
+                <option value="1">1-Second Hand Car</option>
+			  </select>
+			  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+			    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+			  </div>
+			</div>
+
+
+
+
+            <h3>What Is the Fuel type?</h3><br>
+
+        <!--     <select name="Fuel_Type_Petrol" id="fuel" required="required">
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Diesel">CNG</option>
+            </select> -->
+
+            <div class="inline-block relative w-64">
+			  <select name="Fuel_Type_Petrol" id="fuel" required="required" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+			     <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Diesel">CNG</option>
+			  </select>
+			  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+			    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+			  </div>
+			</div>
+
+
+
+            <h3>Are you A Dealer or Individual</h3><br>
+<!-- 
+            <select name="Seller_Type_Individual" id="resea" required="required">
+                <option value="Dealer">Dealer</option>
+                <option value="Individual">Individual</option>
+            </select> -->
+
+            <div class="inline-block relative w-64">
+			  <select name="Seller_Type_Individual" id="resea" required="required" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+			    <option value="Dealer">Dealer</option>
+                <option value="Individual">Individual</option>
+			  </select>
+			  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+			    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+			  </div>
+			</div>
+
+
+
+            <h3>Transmission type</h3><br>
+
+            <!-- <select name="Transmission_Mannual" id="research" required="required">
+                <option value="Mannual">Manual Car</option>
+                <option value="Automatic">Automatic Car</option>
+            </select> -->
+
+            <div class="inline-block relative w-64">
+			  <select name="Transmission_Mannual" id="research" required="required" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+			    <option value="Mannual">Manual Car</option>
+                <option value="Automatic">Automatic Car</option>
+			  </select>
+			  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+			    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+			  </div>
+			</div>
+
+
+            <br><br>
+            <button id="sub" type="submit " class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+			 Calculate the Selling Price
+			</button>
+            <!-- <button  id="sub" type="submit "  class="btn btn-primary btn-lg btn-block">Calculate the Selling Price</button> -->
+            <br>
+
+
+
+
+        </form>
+
+
+        <br><br><h3>{{ prediction_text }}<h3>
+    </div>
+</h3>
+</h3>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  
+</body>
+</html>
